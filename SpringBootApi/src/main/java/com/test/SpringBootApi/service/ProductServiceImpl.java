@@ -8,20 +8,20 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
     @Override
     public Product save(Product product) {
-        try{
+        try {
             return productRepository.save(
                     new Product(
                             product.getProductName(),
                             product.getPrice()
                     )
             );
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -29,12 +29,12 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Optional<Product> findById(Long id) {
-        try{
+        try {
             Optional<Product> productData = productRepository.findById(id);
-            if(productData.isPresent()){
+            if (productData.isPresent()) {
                 return productData;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -42,19 +42,18 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product update(Long id, Product product) {
-        try{
+        try {
             Optional<Product> productData = productRepository.findById(id);
-            if(productData.isPresent()){
+            if (productData.isPresent()) {
                 Product _product = productData.get();
                 _product.setProductName(product.getProductName());
                 _product.setPrice(product.getPrice());
                 productRepository.save(_product);
-            }
-            else{
+            } else {
                 return null;
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -62,9 +61,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void delete(Long id) {
-        try{
+        try {
             productRepository.deleteById(id);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

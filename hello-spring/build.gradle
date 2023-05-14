@@ -6,12 +6,14 @@ plugins {
 
 group = 'hello'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
+//mavenCentral에서 dependencies를 다운받아옴
 repositories {
 	mavenCentral()
 }
 
+//
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

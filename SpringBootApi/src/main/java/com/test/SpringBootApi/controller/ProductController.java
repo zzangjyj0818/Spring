@@ -18,12 +18,13 @@ public class ProductController {
     @Autowired
     ProductServiceImpl productService;
 
-    @GetMapping("/products/{id}")
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") long id){
 
-        try{
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Optional<Product>> getProductById(@PathVariable("id") long id) {
+
+        try {
             return ResponseEntity.ok(productService.findById(id));
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -31,12 +32,12 @@ public class ProductController {
 
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        try{
+        try {
             ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(productService.save(product));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -48,12 +49,12 @@ public class ProductController {
             @RequestBody Product product
     ) {
 
-        try{
+        try {
             ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(productService.update(id,product));
+                    .body(productService.update(id, product));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -61,10 +62,10 @@ public class ProductController {
 
     @DeleteMapping("/products/{id}")
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") long id) {
-        try{
+        try {
             productService.delete(id);
             ResponseEntity.noContent();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

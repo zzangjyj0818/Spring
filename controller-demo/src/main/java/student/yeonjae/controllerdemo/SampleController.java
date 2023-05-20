@@ -5,9 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.slf4j.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class SampleController {
-    private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
+    private static final Logger logger
+            = LoggerFactory.getLogger(SampleController.class);
+
 
     //URL Mapping
     @GetMapping(

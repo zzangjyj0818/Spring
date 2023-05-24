@@ -78,4 +78,4 @@ public class MainForSpring {
         System.out.print("change 이메일 현재비번 변경비번");
         System.out.println();
     }
-    }
+}

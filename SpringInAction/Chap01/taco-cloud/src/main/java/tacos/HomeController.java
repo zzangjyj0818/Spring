@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 // 브라우저에 반환 되는 HTML을 생성하기 위해 해당 읍답의 웹 요청을 뷰에 전달함.
 @Controller
 public class HomeController {
+    // 요청 경로는 "/"
     @GetMapping("/")
+    // 반환하는 것은 home.html (View page)
     public String home() {
         return "home";
     }

@@ -1,8 +1,11 @@
 package tacos.web;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,29 +18,26 @@ import tacos.Ingredient;
 import tacos.Ingredient.Type;
 import javax.validation.Valid;
 import org.springframework.validation.Errors;
+import tacos.data.IngredientRepository;
 
 // Slf4j : 로깅
 @Slf4j
 @Controller
-// /design으로 시작하는 경로의 요청을 처리함
+// /design 으로 시작하는 경로의 요청을 처리함
 @RequestMapping("/design")
 public class DesignTacoController {
+    private final IngredientRepository ingredientRepo;
+
+    // 의존성 주입
+    @Autowired
+    public DesignTacoController(IngredientRepository ingredientRepo){
+        this.ingredientRepo = ingredientRepo;
+    }
+
     @GetMapping
     public String showDesignForm(Model model) {
-        // DB를 쓰지 않으므로, List에 직접 재료들을 추가함
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
-                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
-                new Ingredient("CARN", "Carnitas", Type.PROTEIN),
-                new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES),
-                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-                new Ingredient("CHED", "Cheddar", Type.CHEESE),
-                new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
-                new Ingredient("SLSA", "Salsa", Type.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
-        );
-
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepo.findAll().forEach(i -> ingredients.add(i));
         Type[] types = Ingredient.Type.values();
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(),
@@ -58,7 +58,7 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    // @Valid는 유효성 검사를 수행하라고 알려줌.
+    // @Valid 는 유효성 검사를 수행하라고 알려줌.
     public String processDesign(@Valid Taco design, Errors errors) {
         if (errors.hasErrors()) {
             return "design";
